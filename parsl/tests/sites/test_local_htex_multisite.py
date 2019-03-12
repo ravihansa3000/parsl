@@ -3,39 +3,39 @@ import argparse
 import pytest
 
 import parsl
-from parsl.app.app import App
+from parsl.app.app import python_app, bash_app
 from parsl.tests.conftest import load_dfk
-from parsl.tests.configs.local_ipp_multisite import config
+from parsl.tests.configs.local_htex_multisite import config
 
 parsl.clear()
 dfk = parsl.load(config)
 
 
-@App("python", executors=['local_ipp_2'])
+@python_app(executors=['local_htex_2'])
 def python_app_2():
     import os
     import threading
     import time
-    time.sleep(1)
+    time.sleep(0.1)
     return "Hello from PID[{}] TID[{}]".format(os.getpid(), threading.current_thread())
 
 
-@App("python", executors=['local_ipp_1'])
+@python_app(executors=['local_htex_1'])
 def python_app_1():
     import os
     import threading
     import time
-    time.sleep(1)
+    time.sleep(0.1)
     return "Hello from PID[{}] TID[{}]".format(os.getpid(), threading.current_thread())
 
 
-@App("bash", dfk)
+@bash_app
 def bash_app(stdout=None, stderr=None):
-    return 'echo "Hello from $(uname -a)" ; sleep 2'
+    return 'echo "Hello from $(uname -a)" ; sleep 0.1'
 
 
 @pytest.mark.local
-@pytest.mark.skip('broken in pytest')
+# @pytest.mark.skip('broken in pytest')
 def test_python(N=2):
     """Testing basic python functionality."""
 
