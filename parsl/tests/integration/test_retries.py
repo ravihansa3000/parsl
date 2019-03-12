@@ -73,7 +73,7 @@ def test_fail_delayed(numtasks=10):
     x = sleep()
     fus = []
     for i in range(0, numtasks):
-        fu = sleep_then_fail(inputs=[x], sleep_dur=0.5)
+        fu = sleep_then_fail(inputs=[x], sleep_dur=0.1)
         fus.extend([fu])
 
     try:

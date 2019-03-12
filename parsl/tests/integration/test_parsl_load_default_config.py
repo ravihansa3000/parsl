@@ -1,18 +1,18 @@
 import parsl
-from parsl import *
-
-dfk = parsl.load()
+from parsl.app.app import python_app
 
 
-@App('python', dfk)
+@python_app
 def cpu_stress(inputs=[], outputs=[]):
     s = 0
-    for i in range(10**8):
+    for i in range(10**5):
         s += i
     return s
 
 
 def test_parsl_load_default_config():
+    dfk = parsl.load()
+
     a1, b1 = [cpu_stress(),
               cpu_stress()]
     a1.result()
