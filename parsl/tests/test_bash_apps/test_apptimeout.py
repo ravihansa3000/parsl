@@ -4,9 +4,9 @@ from parsl.tests.configs.local_threads import config
 
 
 @App('bash')
-def echo_to_file(inputs=[], outputs=[], stderr='std.err', stdout='std.out', walltime=0.5):
+def echo_to_file(inputs=[], outputs=[], stderr='std.err', stdout='std.out', walltime=0.1):
     return """echo "sleeping";
-    sleep 1 """
+    sleep 0.5 """
 
 
 def test_walltime():

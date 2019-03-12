@@ -28,7 +28,7 @@ def test_mapred_type1(width=2):
 
     futs = []
     for i in range(1, width + 1):
-        fu = fan_out(i, 1)
+        fu = fan_out(i, 0.1)
         futs.extend([fu])
 
     print("Fan out : ", futs)

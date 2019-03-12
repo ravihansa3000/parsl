@@ -32,7 +32,7 @@ def test_increment_slow(depth=2):
     """
     futs = {0: 0}
     for i in range(1, depth):
-        futs[i] = slow_increment(futs[i - 1], 0.5)
+        futs[i] = slow_increment(futs[i - 1], 0.1)
 
     print(futs[i])
     print([futs[i].result() for i in futs if not isinstance(futs[i], int)])

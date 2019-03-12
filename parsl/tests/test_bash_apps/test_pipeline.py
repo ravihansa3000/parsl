@@ -53,7 +53,7 @@ def test_increment(depth=5):
                 key), "[TEST] incr failed for key:{0} got:{1}".format(key, data)
 
 
-def test_increment_slow(depth=5, dur=0.5):
+def test_increment_slow(depth=5, dur=0.1):
     """Test simple pipeline slow (sleep.5) A->B...->N
     """
     # Create the first file

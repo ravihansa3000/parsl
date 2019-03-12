@@ -48,7 +48,7 @@ def test_func_2(width=2):
 
     fu_1 = []
     for i in range(1, width + 1):
-        fu = map_one(i, random.randint(0, 5))
+        fu = map_one(i, random.randint(0, 5) / 10)
         fu_1.extend([fu])
 
     fu_2 = []

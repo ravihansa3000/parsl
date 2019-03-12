@@ -11,25 +11,9 @@ from parsl.tests.configs.local_threads import config
 
 
 @App('python')
-def double(x):
-    import time
-    time.sleep(1)
-    return x * 2
-
-
-def test_1():
-
-    x = double(5)
-    print(x.done())
-
-    # Testing. Adding explicit block
-    x.result()
-
-
-@App('python')
 def sleep_double(x):
     import time
-    time.sleep(0.2)
+    time.sleep(0.1)
     return x * 2
 
 
@@ -46,7 +30,7 @@ def test_2():
 @App('python')
 def wait_sleep_double(x, fu_1, fu_2):
     import time
-    time.sleep(0.2)
+    time.sleep(0.1)
     return x * 2
 
 
@@ -126,7 +110,6 @@ def test_5():
 if __name__ == "__main__":
     parsl.clear()
     parsl.load(config)
-    test_1()
     test_2()
     test_3()
     test_4()

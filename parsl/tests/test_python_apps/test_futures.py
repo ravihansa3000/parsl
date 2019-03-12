@@ -40,7 +40,7 @@ def test_fut_case_1():
     """Testing the behavior of AppFutures where there are no dependencies
     """
 
-    app_fu = delay_incr(1, delay=0.5)
+    app_fu = delay_incr(1, delay=0.1)
 
     status = app_fu.done()
     result = app_fu.result()
@@ -57,7 +57,7 @@ def test_fut_case_2():
     """Testing the behavior of DataFutures where there are no dependencies
     """
     output_f = 'test_fut_case_2.txt'
-    app_fu = delay_incr(1, delay=10, outputs=[output_f])
+    app_fu = delay_incr(1, delay=0.1, outputs=[output_f])
     data_fu = app_fu.outputs[0]
 
     data_fu.done()
@@ -79,10 +79,10 @@ def test_fut_case_2():
 def test_fut_case_3():
     """Testing the behavior of AppFutures where there are dependencies
 
-    The first call has a delay of 0.5s, and the second call depends on the first
+    The first call has a delay of 0.1s, and the second call depends on the first
     """
 
-    app_1 = delay_incr(1, delay=0.5)
+    app_1 = delay_incr(1, delay=0.1)
     app_2 = delay_incr(app_1)
 
     status = app_2.done()
@@ -99,15 +99,15 @@ def test_fut_case_3():
 def test_fut_case_4():
     """Testing the behavior of DataFutures where there are dependencies
 
-    The first call has a delay of 0.5s, and the second call depends on the first
+    The first call has a delay of 0.1s, and the second call depends on the first
     """
     """Testing the behavior of DataFutures where there are no dependencies
     """
     output_f1 = 'test_fut_case_4_f1.txt'
     output_f2 = 'test_fut_case_4_f2.txt'
-    app_1 = delay_incr(1, delay=0.5, outputs=[output_f1])
+    app_1 = delay_incr(1, delay=0.1, outputs=[output_f1])
     app_1.outputs[0]
-    app_2 = delay_incr(app_1, delay=0.5, outputs=[output_f2])
+    app_2 = delay_incr(app_1, delay=0.1, outputs=[output_f2])
     data_2 = app_2.outputs[0]
 
     status = data_2.done()
