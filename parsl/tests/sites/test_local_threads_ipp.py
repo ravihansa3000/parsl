@@ -3,40 +3,37 @@ import argparse
 import pytest
 
 import parsl
-from parsl.dataflow.dflow import DataFlowKernel
-from parsl.app.app import App
-from parsl.tests.conftest import load_dfk
-from parsl.tests.configs.local_threads_ipp import config
+from parsl.app.app import python_app, bash_app
+from parsl.tests.configs.local_threads_htex import config
 
 parsl.clear()
-dfk = DataFlowKernel(config=config)
-parsl.set_stream_logger()
+parsl.load(config)
 
 import logging
 logger = logging.getLogger(__name__)
 
 
-@App("python", dfk, executors=['local_threads'])
+@python_app(executors=['local_threads'])
 def python_app_2():
     import os
     import threading
     import time
-    time.sleep(1)
+    time.sleep(0.1)
     return "Hello from PID[{}] TID[{}]".format(os.getpid(), threading.current_thread())
 
 
-@App("python", dfk, executors=['local_ipp'])
+@python_app(executors=['local_htex'])
 def python_app_1():
     import os
     import threading
     import time
-    time.sleep(1)
+    time.sleep(0.1)
     return "Hello from PID[{}] TID[{}]".format(os.getpid(), threading.current_thread())
 
 
-@App("bash", dfk)
+@bash_app
 def bash_app(stdout=None, stderr=None):
-    return 'echo "Hello from $(uname -a)" ; sleep 2'
+    return 'echo "Hello from $(uname -a)" ; sleep 0.1'
 
 
 @pytest.mark.local
@@ -79,7 +76,7 @@ if __name__ == "__main__":
     parser.add_argument("-c", "--config", default='local',
                         help="Path to configuration file to run")
     args = parser.parse_args()
-    load_dfk(args.config)
+    parsl.load(args.config)
     if args.debug:
         parsl.set_stream_logger()
 
