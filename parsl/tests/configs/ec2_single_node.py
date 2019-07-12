@@ -14,8 +14,7 @@ Block {Min:0, init:1, Max:1}
 from parsl.providers import AWSProvider
 
 from parsl.config import Config
-from parsl.executors.ipp import IPyParallelExecutor
-from parsl.executors.ipp_controller import Controller
+from parsl.executors import HighThroughputExecutor
 from parsl.tests.utils import get_rundir
 
 # If you are a developer running tests, make sure to update parsl/tests/configs/user_opts.py
@@ -27,9 +26,9 @@ from .user_opts import user_opts
 
 config = Config(
     executors=[
-        IPyParallelExecutor(
+        HighThroughputExecutor(
             label='ec2_single_node',
-            workers_per_node=2,
+            address=user_opts['public_ip'],
             provider=AWSProvider(
                 user_opts['ec2']['image_id'],
                 region=user_opts['ec2']['region'],
@@ -41,8 +40,8 @@ config = Config(
                 max_blocks=1,
                 min_blocks=0,
                 walltime='01:00:00',
+                worker_init="export PARSL_TESTING=True\n",
             ),
-            controller=Controller(public_ip=user_opts['public_ip']),
         )
     ],
     run_dir=get_rundir(),
