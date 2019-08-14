@@ -148,8 +148,8 @@ def load_dfk(config):
                 raise ValueError("DFK changed unexpectedly during test")
             dfk.cleanup()
             parsl.clear()
-        except KeyError:
-            pytest.skip('options in user_opts.py not configured for {}'.format(config))
+        except KeyError as e:
+            pytest.skip('Option {} in user_opts.py not configured for {}'.format(e.args[0], config))
     else:
         yield
 
