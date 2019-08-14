@@ -10,7 +10,9 @@ from parsl.tests.configs.local_threads import config
 @App('bash')
 def increment(inputs=[], outputs=[], stdout=None, stderr=None):
     cmd_line = """
+    echo input file is {inputs[0]}
     x=$(cat {inputs[0]})
+    echo x is $x
     echo $(($x+1)) > {outputs[0]}
     """.format(inputs=inputs, outputs=outputs)
     return cmd_line
